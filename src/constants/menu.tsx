@@ -24,21 +24,25 @@ export const SIDE_BAR_MENU: SIDE_BAR_MENU_PROPS[] = [
     icon: <ChatIcon />,
     path: 'conversation',
   },
-  
   {
-    label: 'Settings',
-    icon: <SettingsIcon />,
-    path: 'settings',
-  },
-  {
-    label: 'Appointments',
+    label: 'Notifications Pusher',
     icon: <CalIcon />,
-    path: 'appointment',
+    path: '',
   },
   {
     label: 'Email Marketing',
     icon: <EmailIcon />,
     path: 'email-marketing',
+  },
+  {
+    label: 'AI Voice Call',
+    icon: <ChatIcon />,
+    path: '',
+  },
+  {
+    label: 'Settings',
+    icon: <SettingsIcon />,
+    path: 'settings',
   },
 ]
 

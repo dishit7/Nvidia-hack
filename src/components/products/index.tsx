@@ -24,14 +24,14 @@ type Props = {
 const ProductTable = ({ id, products }: Props) => {
   return (
     <div>
-      <div>
+      {/* <div>
         <h2 className="font-bold text-2xl">Products</h2>
         <p className="text-sm font-light">
           Add products to your store and set them live to accept payments from
           customers.
         </p>
-      </div>
-      <TabsMenu
+      </div> */}
+      {/* <TabsMenu
         className="w-full flex justify-start"
         triggers={[
           {
@@ -85,7 +85,7 @@ const ProductTable = ({ id, products }: Props) => {
             ))}
           </DataTable>
         </TabsContent>
-      </TabsMenu>
+      </TabsMenu> */}
     </div>
   )
 }

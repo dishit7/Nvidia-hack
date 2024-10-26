@@ -49,11 +49,8 @@ const Page = async (props: Props) => {
           </div>
           <div className="flex flex-col">
             <div className="w-full flex justify-between items-start mb-5">
-              <div className="flex gap-3 items-center">
-                <TransactionsIcon />
-                <p className="font-bold">Recent Transactions</p>
-              </div>
-              <p className="text-sm">See more</p>
+              
+             
             </div>
             <Separator orientation="horizontal" />
             {transactions &&

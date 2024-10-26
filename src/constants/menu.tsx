@@ -37,7 +37,7 @@ export const SIDE_BAR_MENU: SIDE_BAR_MENU_PROPS[] = [
   {
     label: 'AI Voice Call',
     icon: <ChatIcon />, //add proper icon here
-    path: '',
+    path: 'calling',
   },
   {
     label: 'Advertisement Maker', 

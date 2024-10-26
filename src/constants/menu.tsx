@@ -27,7 +27,7 @@ export const SIDE_BAR_MENU: SIDE_BAR_MENU_PROPS[] = [
   {
     label: 'Notifications Pusher',
     icon: <CalIcon />,
-    path: '',
+    path: 'notification',
   },
   {
     label: 'Email Marketing',

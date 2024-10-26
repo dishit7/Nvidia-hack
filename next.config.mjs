@@ -5,6 +5,10 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'pollinations.ai', // Add this line for pollinations.ai
+      },
+      {
+        protocol: 'https',
         hostname: 'ucarecdn.com',
       },
       {
@@ -13,6 +17,6 @@ const nextConfig = {
       },
     ],
   },
-}
+};
 
-export default nextConfig
+export default nextConfig;

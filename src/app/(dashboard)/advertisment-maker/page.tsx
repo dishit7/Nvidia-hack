@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Loader2, Sparkles, Download } from 'lucide-react';
+import Image from 'next/image'
+
 
 const ImageGenerator = () => {
   const [prompt, setPrompt] = useState('');
@@ -30,7 +32,7 @@ const ImageGenerator = () => {
     }
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = (e:any) => {
     if (e.key === 'Enter') {
       generateImage();
     }
@@ -98,9 +100,11 @@ const ImageGenerator = () => {
                   <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 background-animate" />
                 )}
                 {imageUrl && (
-                  <img
+                  <Image
                     src={imageUrl}
                     alt={prompt}
+                    width={576} // Matches the max-w-xl of the parent container
+                    height={576}
                     onLoad={handleImageLoad}
                     className={`w-full h-full object-cover transition-opacity duration-300 ${
                       imageLoading ? 'opacity-0' : 'opacity-100'

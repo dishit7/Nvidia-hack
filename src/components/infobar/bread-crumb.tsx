@@ -12,8 +12,7 @@ const BreadCrumb = (props: Props) => {
     expand,
     loading,
     onActivateRealtime,
-    onExpand,
-    page,
+     page,
     onSignOut,
     realtime,
   } = useSideBar()

@@ -33,17 +33,16 @@ const SubscriptionForm = ({ plan }: Props) => {
     <Loader loading={loading}>
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-3">
-          {['STANDARD', 'PRO', 'ULTIMATE'].map((tier, index) => (
+          {/* {['STANDARD', 'PRO', 'ULTIMATE'].map((tier, index) => (
             <SubscriptionCard
               key={index}
               title={tier}
               description={`Perfect if you’re just getting started with SAAS-Nvidia`}
               price={tier === 'STANDARD' ? '0' : tier === 'PRO' ? '15' : '35'}
-              payment={payment}
-              onPayment={onSetPayment}
+               onPayment={onSetPayment}
               id={tier}
             />
-          ))}
+          ))} */}
         </div>
 
         

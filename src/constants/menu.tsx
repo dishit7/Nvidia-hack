@@ -42,7 +42,7 @@ export const SIDE_BAR_MENU: SIDE_BAR_MENU_PROPS[] = [
   {
     label: 'Advertisement Maker', 
     icon: <ChatIcon />, // add proper icon here 
-    path: '',
+    path: 'advertisment-maker',
   },
   {
     label: 'Settings',

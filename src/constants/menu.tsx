@@ -27,7 +27,7 @@ export const SIDE_BAR_MENU: SIDE_BAR_MENU_PROPS[] = [
   {
     label: 'Notifications Pusher',
     icon: <CalIcon />,
-    path: 'notification',
+    path: 'notification', //add proper icon here
   },
   {
     label: 'Email Marketing',
@@ -36,7 +36,12 @@ export const SIDE_BAR_MENU: SIDE_BAR_MENU_PROPS[] = [
   },
   {
     label: 'AI Voice Call',
-    icon: <ChatIcon />,
+    icon: <ChatIcon />, //add proper icon here
+    path: '',
+  },
+  {
+    label: 'Advertisement Maker', 
+    icon: <ChatIcon />, // add proper icon here 
     path: '',
   },
   {

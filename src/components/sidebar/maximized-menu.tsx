@@ -6,7 +6,6 @@ import DomainMenu from './domain-menu'
 import MenuItem from './menu-item'
 
 type Props = {
-  onExpand(): void
   current: string
   onSignOut(): void
   domains:
@@ -19,7 +18,7 @@ type Props = {
     | undefined
 }
 
-const MaxMenu = ({ current, domains, onExpand, onSignOut }: Props) => {
+const MaxMenu = ({ current, domains, onSignOut }: Props) => {
   return (
     <div className="py-3 px-4 flex flex-col h-full">
       <div className="flex justify-between items-center">
@@ -37,7 +36,6 @@ const MaxMenu = ({ current, domains, onExpand, onSignOut }: Props) => {
         />
         <Menu
           className="cursor-pointer animate-fade-in opacity-0 delay-300 fill-mode-forwards"
-          onClick={onExpand}
         />
       </div>
       <div className="animate-fade-in opacity-0 delay-300 fill-mode-forwards flex flex-col justify-between h-full pt-10">

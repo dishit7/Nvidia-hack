@@ -1,192 +1,153 @@
-"use client"
+'use client';
 
-import React, { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Download, Image as ImageIcon, Loader2, RefreshCcw } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Loader2, Sparkles, Download } from 'lucide-react';
 
-export default function ImageGenerator() {
-  const [prompt, setPrompt] = useState("")
-  const [imageUrl, setImageUrl] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
-
-//   const formatPrompt = (text) => {
-//     return text.replace(/\s+/g, '_')
-//   }
+const ImageGenerator = () => {
+  const [prompt, setPrompt] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
 
   const generateImage = async () => {
-    if (!prompt.trim()) {
-      setError("Please enter a prompt")
-      return
-    }
+    if (!prompt.trim()) return;
 
-    setIsLoading(true)
-    setError("")
+    setLoading(true);
+    setImageLoading(true);
 
-
-    const generateImage = async () => {
-        if (!prompt.trim()) {
-          setError("Please enter a prompt")
-          return
-        }
-    
-        setIsLoading(true)
-        setError("")
-    
-        try {
-
-          console.log(prompt)
-          // Construct the API URL with the formatted prompt
-          const url=`https://pollinations.ai/api/create?prompt=${prompt}`
-          console.log(url)
-          const response = await fetch(`https://pollinations.ai/api/create?prompt=${prompt}`)
-          
-          if (!response.ok) {
-            throw new Error("Failed to generate image")
-          }
-    
-          const data = await response.json()
-          setImageUrl(data.imageUrl) // Adjust based on actual API response structure
-        } catch (err) {
-          setError("Failed to generate image. Please try again.")
-          console.error(err)
-        } finally {
-          setIsLoading(false)
-        }
-      }
-    
     try {
-
-    //   const formattedPrompt = formatPrompt(prompt)
-    //   console.log(formatPrompt)
-    console.log(prompt)
-      const response = await fetch(`https://pollinations.ai/api/create ${prompt}`)
-      if (!response.ok) {
-        throw new Error("Failed to generate image")
-      }
-
-      const data = await response.json()
-      setImageUrl(data.imageUrl) // Adjust based on actual API response structure
-    } catch (err) {
-      setError("Failed to generate image. Please try again.")
-      console.error(err)
+      const url = `https://pollinations.ai/prompt/${encodeURIComponent(
+        `Generate an image for an advertisement campaign of the business domain given: ${prompt}`
+      )}`;
+      setImageUrl(url);
+    } catch (error) {
+      console.error('Error generating image:', error);
     } finally {
-      setIsLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
-  const handleDownload = async () => {
-    try {
-      const response = await fetch(imageUrl)
-      const blob = await response.blob()
-      const url = window.URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-      link.download = `generated-image-${Date.now()}.png`
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-      window.URL.revokeObjectURL(url)
-    } catch (err) {
-      setError("Failed to download image")
-      console.error(err)
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      generateImage();
     }
-  }
+  };
+
+  const handleImageLoad = () => {
+    setImageLoading(false);
+  };
+
+  const downloadImage = async () => {
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `advertisement-${prompt.replace(/\s+/g, '-').toLowerCase()}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error downloading image:', error);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 p-4 md:p-8">
-      <div className="max-w-4xl mx-auto space-y-8">
-        <div className="text-center space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">AI Image Generator</h1>
-          <p className="text-gray-500">Transform your ideas into stunning images using AI</p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 p-4 sm:p-8">
+      <Card className="w-full max-w-2xl mx-auto shadow-xl">
+        <CardHeader className="border-b bg-white/50 backdrop-blur-sm">
+          <CardTitle className="text-2xl font-bold text-center flex items-center justify-center gap-2">
+            <Sparkles className="w-6 h-6 text-purple-500" />
+            Advertisement Maker
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6 p-6">
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Input
+              placeholder="Enter your domain..."
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              onKeyPress={handleKeyPress}
+              className="flex-1 h-12 px-4 text-lg border-2 focus:border-purple-500"
+            />
+            <Button
+              onClick={generateImage}
+              disabled={loading || !prompt.trim()}
+              className="h-12 px-6 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold transition-all duration-200 disabled:opacity-50"
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Generating
+                </>
+              ) : (
+                'Generate Image'
+              )}
+            </Button>
+          </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Create Image</CardTitle>
-            <CardDescription>
-              Enter a detailed description of the image you want to generate
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col md:flex-row gap-4">
-              <Input
-                placeholder="E.g., A surreal digital garden with floating islands and bioluminescent plants..."
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                className="flex-1"
-              />
-              <Button 
-                onClick={generateImage}
-                disabled={isLoading || !prompt.trim()}
-                className="md:w-32"
-              >
-                {isLoading ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <>
-                    <RefreshCcw className="mr-2 h-4 w-4" />
-                    Generate
-                  </>
+          {(imageUrl || imageLoading) && (
+            <div className="relative">
+              <div className="mt-6 relative aspect-square w-full max-w-xl mx-auto rounded-xl overflow-hidden bg-gray-100">
+                {imageLoading && (
+                  <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 background-animate" />
                 )}
-              </Button>
-            </div>
-            {error && (
-              <p className="text-red-500 text-sm mt-2">{error}</p>
-            )}
-          </CardContent>
-        </Card>
-
-        {imageUrl && (
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex justify-between items-center">
-                Generated Image
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleDownload}
-                >
-                  <Download className="mr-2 h-4 w-4" />
-                  Download
-                </Button>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="relative aspect-square rounded-lg overflow-hidden bg-gray-100">
-                <div className={cn(
-                  "absolute inset-0 flex items-center justify-center",
-                  isLoading ? "visible" : "hidden"
-                )}>
-                  <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
-                </div>
                 {imageUrl && (
                   <img
                     src={imageUrl}
-                    alt="Generated image"
-                    className="w-full h-full object-cover"
-                    onLoad={() => setIsLoading(false)}
+                    alt={prompt}
+                    onLoad={handleImageLoad}
+                    className={`w-full h-full object-cover transition-opacity duration-300 ${
+                      imageLoading ? 'opacity-0' : 'opacity-100'
+                    }`}
                   />
                 )}
               </div>
-            </CardContent>
-          </Card>
-        )}
+              
+              {imageUrl && !imageLoading && (
+                <div className="absolute top-8 right-2 z-10">
+                  <Button
+                    onClick={downloadImage}
+                    className="bg-white/90 hover:bg-white text-purple-600 rounded-full w-12 h-12 flex items-center justify-center shadow-lg hover:scale-105 transition-all duration-200"
+                    title="Download Image"
+                  >
+                    <Download className="w-5 h-5" />
+                  </Button>
+                </div>
+              )}
+            </div>
+          )}
 
-        {!imageUrl && !isLoading && (
-          <Card className="border-dashed">
-            <CardContent className="flex flex-col items-center justify-center py-12">
-              <ImageIcon className="h-12 w-12 text-gray-400" />
-              <p className="mt-4 text-sm text-gray-500">
-                Your generated image will appear here
-              </p>
-            </CardContent>
-          </Card>
-        )}
-      </div>
+          {imageUrl && (
+            <p className="text-sm text-gray-500 text-center mt-2 italic">
+              &quot;{prompt}&quot;
+            </p>
+          )}
+        </CardContent>
+      </Card>
+
+      <style jsx global>{`
+        .background-animate {
+          background-size: 200% 200%;
+          animation: shimmer 1.5s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+          0% {
+            background-position: 100% 0;
+          }
+          100% {
+            background-position: -100% 0;
+          }
+        }
+      `}</style>
     </div>
-  )
-}
+  );
+};
+
+export default ImageGenerator;

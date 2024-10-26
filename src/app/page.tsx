@@ -29,10 +29,10 @@ export default async function Home() {
     | undefined = await onGetBlogPosts()
   console.log(posts)
   return (
-    <main>
+    <main >
       <NavBar />
       <section>
-        <div className="flex items-center justify-center flex-col mt-[80px] gap-4 ">
+        <div className="flex items-center justify-center flex-col mt-[80px] gap-4 font-sans ">
           <span className="text-orange bg-orange/20 px-4 py-2 rounded-full text-sm">
             An AI powered sales assistant chatbot
           </span>
